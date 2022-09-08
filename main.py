@@ -1,3 +1,4 @@
+from ast import IsNot
 from kivy.lang import Builder
 from kivymd.app import MDApp
 import sqlite3
@@ -23,19 +24,18 @@ class MainApp(MDApp):
         c = conn.cursor()
         
         #insert record
-        
         word_input = self.root.ids.word_input.text
-        
-        c.execute("INSERT INTO customers VALUES (:first)",
-                  {
-                   'first': word_input,   
-                  })
-        
-        #show massage insert success record !
-        self.root.ids.word_label.text = f'{word_input} Added !'
-        
-        #clear input text box
-        word_input = ''
+        if word_input is not '':
+            c.execute("INSERT INTO customers VALUES (:first)",
+                    {
+                    'first': word_input,   
+                    })
+            #show massage insert success record !
+            self.root.ids.word_label.text = f'{word_input} Added !'
+            #clear input text box
+            word_input = ''
+        else:
+            self.root.ids.word_label.text = 'please enter value !!'
         
         conn.commit()
         conn.close()
