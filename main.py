@@ -23,16 +23,19 @@ class MainApp(MDApp):
         c = conn.cursor()
         
         #insert record
+        
+        word_input = self.root.ids.word_input.text
+        
         c.execute("INSERT INTO customers VALUES (:first)",
                   {
-                   'first': self.root.ids.word_input.text,   
+                   'first': word_input,   
                   })
         
         #show massage insert success record !
-        self.root.ids.word_label.text = f'{self.root.ids.word_input.text} Added !'
+        self.root.ids.word_label.text = f'{word_input} Added !'
         
         #clear input text box
-        self.root.ids.word_input.text = ''
+        word_input = ''
         
         conn.commit()
         conn.close()
